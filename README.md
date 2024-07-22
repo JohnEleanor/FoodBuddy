@@ -36,14 +36,8 @@
 > # .env File 
 > ```
 > LINE_CHANNEL_ACCESS_TOKEN = YOUR_CHANNEL_ACCESS_TOKEN
-> ```
-> ```
 > LINE_CHANNEL_SECRET = YOUR_CHANNEL_SECRET
-> ```
-> ```
 > PORT = 3000
-> ```
-> ```
 > DOMAIN =  YOUR_DOMAIN
 > ```
 
