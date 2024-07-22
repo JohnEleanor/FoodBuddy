@@ -1,5 +1,11 @@
 # Line_FoodBuddy
-`การติดตั้ง`
+
+> [!IMPORTANT]
+> ไปตั้ง .env ด้วย
+
+
+> [!TIP]
+> การติดตั้ง
 
 ```
 git clone https://github.com/JohnEleanor/FoodBuddy.git
@@ -14,5 +20,3 @@ npm i
 
 
 
-> [!IMPORTANT]
-> ไปตั้ง .env ด้วย
