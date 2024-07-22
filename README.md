@@ -9,15 +9,16 @@
 > ```
 > git clone https://github.com/JohnEleanor/FoodBuddy.git
 > ```
+> ```
+> cd foodbuddy
+> ```
+> ```
+> npm i 
+> ```
 
 
 
-```
-cd foodbuddy
-```
-```
-npm i 
-```
+
 
 
 
