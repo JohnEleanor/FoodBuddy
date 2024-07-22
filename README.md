@@ -1,4 +1,6 @@
 # Line_FoodBuddy
+> [!IMPORTANT]
+> ไปตั้ง .env ด้วย
 
 ## Project line chat bot
 > Project นี้เกี่ยวกับการทำ line chat bot เพื่อให้ผู้ใช้งานสามารถดูการกินของตัวเองผ่าน Line bot <br>
@@ -11,9 +13,6 @@
 > นางสาวกชกร เเก้วสุริยา 6606021421349 ITI SEC B
 > ```
 
-
-> [!IMPORTANT]
-> ไปตั้ง .env ด้วย
 
 
 > [!TIP]

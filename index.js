@@ -192,7 +192,7 @@ async function replyImage(replyToken, imageId) {
         const form = new FormData();
         form.append('image', fs.createReadStream(downloadPath));
 
-        const response = await axios.post('http://127.0.0.1:5000/process', form, {
+        const response = await axios.post(`${process.env.DOMAIN}:5000/process`, form, {
             headers: {
                 ...form.getHeaders(),
             },
