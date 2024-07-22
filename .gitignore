@@ -1,3 +1,4 @@
 # *Screct 
 .env
 /node_modules
+/image/*

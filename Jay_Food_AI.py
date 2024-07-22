@@ -27,7 +27,7 @@ def process_image():
 def process_with_opencv(image):
     font = cv2.FONT_HERSHEY_SIMPLEX
     text = 'Mook Bot Response By openCV'
-    org = (0, 500)
+    org = (50, 500)
     font_scale = 2
     color = (0, 0, 255)
     thickness = 5
@@ -35,4 +35,4 @@ def process_with_opencv(image):
     return processed_image
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=False)

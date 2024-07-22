@@ -96,7 +96,6 @@ app.post('/v1/webhook', (req, res) => {
            
         } else if (event.type === 'message' && event.message.type === 'image') {
             // ! เงื่อนไขสำหรับรูปภาพ
-            // replyImage(replyToken, event.message.id, userID);
             precessImage(replyToken, event.message.id, userID);
             
 
@@ -155,13 +154,13 @@ function replyImage(replyToken, imageId) {
                             contents: [
                                 {
                                     type: "text",
-                                    text: "รูปภาพจาก openCV",
+                                    text: "นี้คือรูปภาพจาก openCV",
                                     weight: "bold",
                                     size: "xl",
                                 },
                                 {
                                     type: "text",
-                                    text: "[ระบบ] อยู่ในช่วงพัฒนา",
+                                    text: "[ระบบ] : อยู่ในช่วงพัฒนา",
                                     margin: "md",
                                 },
                             ],
@@ -185,6 +184,11 @@ function replyImage(replyToken, imageId) {
                             flex: 0,
                         },
                     },
+                },
+                {
+                    type: "image",
+                    originalContentUrl: `${process.env.DOMAIN}/${imageId}_processed.jpg`,
+                    previewImageUrl: `${process.env.DOMAIN}/${imageId}_processed.jpg`
                 },
             ],
         };
