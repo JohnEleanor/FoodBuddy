@@ -207,8 +207,8 @@ async function replyImage(replyToken, imageId) {
             messages: [
                 {
                     type: "image",
-                    originalContentUrl: `https://ee23-58-11-26-134.ngrok-free.app/${imageId}_processed.jpg`,
-                    previewImageUrl: `https://ee23-58-11-26-134.ngrok-free.app/${imageId}_processed.jpg`
+                    originalContentUrl: `${process.env.DOMAIN}/${imageId}_processed.jpg`,
+                    previewImageUrl: `${process.env.DOMAIN}/${imageId}_processed.jpg`
                 },
                 {
                     type: 'text',
