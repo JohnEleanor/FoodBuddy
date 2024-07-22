@@ -35,7 +35,13 @@ const headers = {
     'Authorization': `Bearer ${process.env.LINE_CHANNEL_ACCESS_TOKEN}`
 };
 
-const noUnserstand = [
+const greetings = ['สวัสดี', 'สวัสดีค่ะ', 'สวัสดีครับ'];
+const wellbeing = ['สบายดีไหม', 'สบายดีไหมคะ', 'สบายดีไหมครับ'];
+const thanks = ['ขอบคุณ', 'ขอบคุณค่ะ', 'ขอบคุณครับ'];
+const good = ['ดี', 'ดีค่ะ', 'ดีครับ', 'ดีจ้า', 'D จร้า', 'D คับ', 'D ครับ', 'D ค่ะ', 'D จ้า'];
+const helpRequests = ['ขอความช่วยเหลือ', 'ขอความช่วยเหลือค่ะ', 'ขอความช่วยเหลือครับ'];
+const addMenu = ['เพิ่ม', 'เพิ่มเมนู', 'เพิ่มเมนูอาหาร'];
+const noUnderstand = [
     'ขอโทษค่ะ หนูไม่เข้าใจค่ะ ลองใหม่อีกครั้งได้มั้ยคะ 🥲',
     'กรุณาลองใหม่ค่ะ 🙏',
     'บ่เข้าใจเด้อ',
@@ -66,25 +72,23 @@ app.post('/v1/webhook', (req, res) => {
             // ! เงื่อนไขสำหรับข้อความ
             axios.get(`https://api.line.me/v2/bot/profile/${userID}`, { headers: headers })
             .then(response => {
-                
-                if (userMessage === 'สวัสดี' || userMessage === 'สวัสดีค่ะ' || userMessage === 'สวัสดีครับ') {
-                    replyMessage(replyToken, `สวัสดีคะ คุณ ${response.data.displayName} มีอะไรให้ช่วยมั้ยค่ะ 🙏`, userID);
-                }else if (userMessage === 'สบายดีไหม' || userMessage === 'สบายดีไหมคะ' || userMessage === 'สบายดีไหมครับ') {
-                    replyMessage(replyToken, `หนูสบายดีค่ะ ขอบคุณที่ถามค่ะ 🙏`, userID)
-                } else if (userMessage === 'ขอบคุณ' || userMessage === 'ขอบคุณค่ะ' || userMessage === 'ขอบคุณครับ') {
-                    replyMessage(replyToken, `ยินดีค่ะ มีอะไรให้ช่วยอีกมั้ยคะ 🙏`, userID);
-                } else if (userMessage === 'ดี' || userMessage === 'ดีค่ะ' || userMessage === 'ดีครับ' || userMessage === 'ดีจ้า' || userMessage === 'D จร้า' || userMessage === 'D คับ' || userMessage === 'D ครับ' || userMessage === 'D ค่ะ' || userMessage === 'D จ้า') {
-                    replyMessage(replyToken, `ดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏`, userID);
-                } else if (userMessage === 'ขอความช่วยเหลือ' || userMessage === 'ขอความช่วยเหลือค่ะ' || userMessage === 'ขอความช่วยเหลือครับ') {
-                    replyMessage(replyToken, `สวัสดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏\nหากต้องการให้ดูเมนูอาหารเเละประเมิณเเคลสามารถส่งรูปภาพมาได้เลยค่ะ`, userID);
-                } else if (userMessage === 'เพิ่ม' || userMessage === 'เพิ่มเมนู' || userMessage === 'เพิ่มเมนูอาหาร') {
-                    replyMessage(replyToken, `สวัสดีค่ะ สามารถส่งรูปภาพเมนูอาหารมาได้เลยค่ะ 🙏`, userID);
+                let replyText = '';
+                if (greetings.includes(userMessage)) {
+                    replyText = `สวัสดีคะ คุณ ${response.data.displayName} มีอะไรให้ช่วยมั้ยค่ะ 🙏`;
+                } else if (wellbeing.includes(userMessage)) {
+                    replyText = 'หนูสบายดีค่ะ ขอบคุณที่ถามค่ะ 🙏';
+                } else if (thanks.includes(userMessage)) {
+                    replyText = 'ยินดีค่ะ มีอะไรให้ช่วยอีกมั้ยคะ 🙏';
+                } else if (good.includes(userMessage)) {
+                    replyText = 'ดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏';
+                } else if (helpRequests.includes(userMessage)) {
+                    replyText = 'สวัสดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏\nหากต้องการให้ดูเมนูอาหารเเละประเมิณเเคลสามารถส่งรูปภาพมาได้เลยค่ะ';
+                } else if (addMenu.includes(userMessage)) {
+                    replyText = 'สวัสดีค่ะ สามารถส่งรูปภาพเมนูอาหารมาได้เลยค่ะ 🙏';
+                } else {
+                    replyText = noUnderstand[Math.floor(Math.random() * noUnderstand.length)];
                 }
-                else {
-                    const no_unDerstand = noUnserstand[Math.floor(Math.random() * noUnserstand.length)];
-                    console.log(no_unDerstand);
-                    replyMessage(replyToken, `${no_unDerstand}  `, userID);
-                }
+                replyMessage(replyToken, replyText, userID);
             })
             .catch(error => {
                 console.log('Error sending message:', error);
@@ -92,7 +96,8 @@ app.post('/v1/webhook', (req, res) => {
            
         } else if (event.type === 'message' && event.message.type === 'image') {
             // ! เงื่อนไขสำหรับรูปภาพ
-            replyImage(replyToken, event.message.id, userID);
+            // replyImage(replyToken, event.message.id, userID);
+            precessImage(replyToken, event.message.id, userID);
             
 
         }
@@ -123,112 +128,65 @@ function replyMessage(replyToken, message, userID) {
    
 }
 
-// async function replyImage(replyToken, imageId ,userID) {
-   
-    
-//     const downloadpath = path.join(__dirname, 'image', `${imageId}.jpg`)
-   
-//     const stream =  await _client.getMessageContent(imageId);
+function replyImage(replyToken, imageId) {
 
-//     const piplineSync = util.promisify(pipeline);
-
-//     const folder_download = fs.createWriteStream(downloadpath);
-    
-//     await piplineSync(stream, folder_download);
-//     try {
-//         const response = await axios.post('http://localhost:5000/process', form, {
-//           headers: {
-//             ...form.getHeaders(),
-//           },
-//           responseType: 'arraybuffer',
-//         });
-    
-//         // Save the processed image
-//         const processedImagePath = path.join(__dirname, 'image', `${imageId}_processed.jpg`);
-//         fs.writeFileSync(processedImagePath, response.data);
-    
-//         // Send the processed image back to the client
-//         response.sendFile(processedImagePath, { root: '.' });
-//       } catch (error) {
-//         console.error('Error processing image:', error);
-//         response.status(500).send('Error processing image');
-//       }
-//     axios.post('https://api.line.me/v2/bot/message/reply', body, { headers: headers })
-//         .then(response => {
-           
-//             // console.log(`https://ee23-58-11-26-134.ngrok-free.app/${imageId}.jpg`)
-//             precessImage(`./image/${imageId}.jpg`);
-//         })
-//         .catch(error => {
-//             console.log('Error sending message:', error);
-//         });
-
-//     try {
-//         // ? ดาวน์โหลดรูปภาพยังเปิดรูปไม่ได้นะ
-//         const body = {
-//             replyToken: replyToken,
-//             messages : [
-//                 {
-//                     type: "image",
-//                     originalContentUrl : `https://ee23-58-11-26-134.ngrok-free.app/${imageId}.jpg`,
-//                     previewImageUrl : `https://ee23-58-11-26-134.ngrok-free.app/${imageId}.jpg`
-//                 },
-//                 {
-//                     type: 'text',
-//                     text: '[ระบบ] อยู่ในช่วงพัฒนา'
-//                 },
-               
-                
-                  
-               
-//             ]
-//         };
-//         const form = new FormData();
-//         form.append('image', fs.createReadStream(path.join(__dirname, 'image', `${imageId}.jpg`)));
-    
-        
-        
-        
-//     } catch (error) {
-      
-//         console.log('%c Error sending message:', 'background: #222; color: #bada55', error.message);
-//     }
-// }
-async function replyImage(replyToken, imageId) {
-    const downloadPath = path.join(__dirname, 'image', `${imageId}.jpg`);
-    const pipelineSync = util.promisify(pipeline);
 
     try {
-        const stream = await _client.getMessageContent(imageId);
-        const folderDownload = fs.createWriteStream(downloadPath);
-        await pipelineSync(stream, folderDownload);
-
-        const form = new FormData();
-        form.append('image', fs.createReadStream(downloadPath));
-
-        const response = await axios.post(`${process.env.DOMAIN}:5000/process`, form, {
-            headers: {
-                ...form.getHeaders(),
-            },
-            responseType: 'arraybuffer',
-        });
-
-        const processedImagePath = path.join(__dirname, 'image', `${imageId}_processed.jpg`);
-        fs.writeFileSync(processedImagePath, response.data);
-
+       
+      
         const body = {
             replyToken: replyToken,
             messages: [
                 {
-                    type: "image",
-                    originalContentUrl: `${process.env.DOMAIN}/${imageId}_processed.jpg`,
-                    previewImageUrl: `${process.env.DOMAIN}/${imageId}_processed.jpg`
+                    type: "flex",
+                    altText: "This is a Flex Message",
+                    contents: {
+                        type: "bubble",
+                        hero: {
+                            type: "image",
+                            url: `${process.env.DOMAIN}/${imageId}_processed.jpg`,
+                            size: "full",
+                            aspectRatio: "20:13",
+                            aspectMode: "cover",
+                        },
+                        body: {
+                            type: "box",
+                            layout: "vertical",
+                            contents: [
+                                {
+                                    type: "text",
+                                    text: "รูปภาพจาก openCV",
+                                    weight: "bold",
+                                    size: "xl",
+                                },
+                                {
+                                    type: "text",
+                                    text: "[ระบบ] อยู่ในช่วงพัฒนา",
+                                    margin: "md",
+                                },
+                            ],
+                        },
+                        footer: {
+                            type: "box",
+                            layout: "vertical",
+                            spacing: "sm",
+                            contents: [
+                                {
+                                    type: "button",
+                                    style: "primary",
+                                    height: "sm",
+                                    action: {
+                                        type: "uri",
+                                        label: "View Image",
+                                        uri: `${process.env.DOMAIN}/${imageId}_processed.jpg`,
+                                    },
+                                },
+                            ],
+                            flex: 0,
+                        },
+                    },
                 },
-                {
-                    type: 'text',
-                    text: '[ระบบ] อยู่ในช่วงพัฒนา'
-                },
-            ]
+            ],
         };
 
         axios.post('https://api.line.me/v2/bot/message/reply', body, { headers: headers })
@@ -244,9 +202,36 @@ async function replyImage(replyToken, imageId) {
     }
 }
 
-function precessImage(imageURL) {
-    
-    console.log('Process image :', imageURL);
+async function precessImage(replyToken, imageId) {
+    const downloadPath = path.join(__dirname, 'image', `${imageId}.jpg`);
+    const pipelineSync = util.promisify(pipeline);
+
+    try {
+        const stream = await _client.getMessageContent(imageId);
+        const folderDownload = fs.createWriteStream(downloadPath);
+        await pipelineSync(stream, folderDownload);
+
+        const form = new FormData();
+        form.append('image', fs.createReadStream(downloadPath));
+
+        const response = await axios.post(`http://127.0.0.1:5000/process`, form, {
+            headers: {
+                ...form.getHeaders(),
+            },
+            responseType: 'arraybuffer',
+        });
+
+        const processedImagePath = path.join(__dirname, 'image', `${imageId}_processed.jpg`);
+        fs.writeFileSync(processedImagePath, response.data);
+
+        // Send processed image to user
+        replyImage(replyToken, imageId);
+
+    } catch (error) {
+        console.log('Error processing image:', error.message);
+    }
+
+   
     
 }
 function saveUserToDatabase(userID) {
