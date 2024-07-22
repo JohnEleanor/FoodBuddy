@@ -1,11 +1,11 @@
 # Line_FoodBuddy
 `การติดตั้ง`
 
-```
-git clone https://github.com/JohnEleanor/FoodBuddy.git
-cd foodbuddy
-npm i 
-```
+```git clone https://github.com/JohnEleanor/FoodBuddy.git```
+
+```cd foodbuddy```
+```npm i ```
+
 
 
 > [!IMPORTANT]
